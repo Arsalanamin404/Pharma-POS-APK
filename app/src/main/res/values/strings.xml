@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Pharma POS</string>
+    <string name="tv_qty">Quantity:</string>
+    <string name="brand_name">Brand Name</string>
+    <string name="tv_generic">Generic:</string>
+    <string name="mrp">MRP:</string>
+    <string name="tv_cost_price">Cost:</string>
+    <string name="expiry">Exp:</string>
+    <string name="edit_btn">Edit</string>
+    <string name="delete_btn">Delete</string>
+    <string name="add_medicine_btn">Add Medicine</string>
+</resources>

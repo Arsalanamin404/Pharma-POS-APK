@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="Theme.PharmaInventory" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">#2E7D32</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <!-- FIXED -->
+        <item name="android:colorBackground">#E8F5E9</item>
+
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#000000</item>
+
+    </style>
+</resources>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:foreground="?attr/selectableItemBackground"
+
+    app:cardCornerRadius="14dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- TOP ROW -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvBrandName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Paracetamol"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#1B5E20"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/tvQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_quantity_chip"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="5dp"
+                android:text="20 pcs"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <!-- GENERIC -->
+        <TextView
+            android:id="@+id/tvGeneric"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Paracetamol 500mg"
+            android:textSize="13sp"
+            android:textColor="#757575"
+            android:layout_marginTop="4dp"/>
+
+        <!-- PRICE + META -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <!-- LEFT (Cost) -->
+            <TextView
+                android:id="@+id/tvCost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cost: ₹120"
+                android:textSize="13sp"
+                android:textColor="#616161"/>
+
+            <!-- RIGHT (MRP) -->
+            <TextView
+                android:id="@+id/tvMrp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MRP: ₹150"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#212121"/>
+        </LinearLayout>
+
+        <!-- DIVIDER -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE"
+            android:layout_marginTop="12dp"/>
+
+        <!-- EXPIRY -->
+        <TextView
+            android:id="@+id/tvExpiry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expiry: Dec 2026"
+            android:textSize="12sp"
+            android:textColor="#E53935"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

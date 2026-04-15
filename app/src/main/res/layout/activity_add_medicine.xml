@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:attr/colorBackground">
+
+    <!-- HEADER -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        app:cardBackgroundColor="?attr/colorPrimary"
+        app:cardElevation="15dp"
+        app:contentPadding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Medicine"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- FORM -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:clipToPadding="false">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="?attr/colorSurface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp">
+
+                <!-- PRODUCT CODE -->
+                <EditText
+                    android:id="@+id/et_pcode"
+                    style="@style/InputStyle"
+                    android:hint="Product Code"/>
+
+                <!-- BRAND -->
+                <EditText
+                    android:id="@+id/et_brand"
+                    style="@style/InputStyle"
+                    android:hint="Brand Name"/>
+
+                <!-- GENERIC -->
+                <EditText
+                    android:id="@+id/et_generic"
+                    style="@style/InputStyle"
+                    android:hint="Generic Name"/>
+
+                <!-- CATEGORY -->
+                <EditText
+                    android:id="@+id/et_category"
+                    style="@style/InputStyle"
+                    android:hint="Category"/>
+
+                <!-- DESCRIPTION -->
+                <EditText
+                    android:id="@+id/et_description"
+                    style="@style/InputStyle"
+                    android:hint="Description &amp; Use"
+                    android:minLines="3"
+                    android:gravity="top"/>
+
+                <!-- QUANTITY -->
+                <EditText
+                    android:id="@+id/et_quantity"
+                    style="@style/InputStyle"
+                    android:hint="Quantity"
+                    android:inputType="numberDecimal"/>
+
+                <!-- MIN STOCK -->
+                <EditText
+                    android:id="@+id/et_min_stock"
+                    style="@style/InputStyle"
+                    android:hint="Minimum Stock"
+                    android:inputType="numberDecimal"/>
+
+                <!-- MANUFACTURER -->
+                <EditText
+                    android:id="@+id/et_manufacturer"
+                    style="@style/InputStyle"
+                    android:hint="Manufacturer"/>
+
+                <!-- BATCH -->
+                <EditText
+                    android:id="@+id/et_batch"
+                    style="@style/InputStyle"
+                    android:hint="Batch"/>
+
+                <!-- EXPIRY -->
+                <EditText
+                    android:id="@+id/et_expiry"
+                    style="@style/InputStyle"
+                    android:hint="Expiry Date"
+                    android:inputType="date"/>
+
+                <!-- COST -->
+                <EditText
+                    android:id="@+id/et_cost"
+                    style="@style/InputStyle"
+                    android:hint="Cost Price"
+                    android:inputType="numberDecimal"/>
+
+                <!-- MRP -->
+                <EditText
+                    android:id="@+id/et_mrp"
+                    style="@style/InputStyle"
+                    android:hint="MRP"
+                    android:inputType="numberDecimal"/>
+
+                <!-- CHECKBOX -->
+                <CheckBox
+                    android:id="@+id/cb_rx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prescription Required"
+                    android:textColor="#111"
+                    android:layout_marginTop="12dp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </ScrollView>
+
+    <!-- BUTTON -->
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Medicine"
+        android:textColor="?attr/colorOnPrimary"
+        android:backgroundTint="?attr/colorPrimary"
+        android:layout_margin="12dp"/>
+
+</LinearLayout>
