@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.admin.pharmainventory.MedicineDetailActivity;
 import com.admin.pharmainventory.R;
-import com.admin.pharmainventory.models.Medicine;
+import com.admin.pharmainventory.entities.MedicineEntity;
 
 import java.util.List;
 
 public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHolder> {
-    private List<Medicine> medicineList;
+    private List<MedicineEntity> medicineList;
 
-    public MedicineAdapter(List<Medicine> medicineList) {
+    public MedicineAdapter(List<MedicineEntity> medicineList) {
         this.medicineList = medicineList;
     }
 
@@ -52,7 +52,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
 //    It puts data into the view created by onCreateViewHolder().
     @Override
     public void onBindViewHolder(@NonNull MedicineAdapter.ViewHolder holder, int position) {
-        Medicine medicine = medicineList.get(position);
+        MedicineEntity medicine = medicineList.get(position);
 
 //        passing data from adapter to medicine detail page
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -60,8 +60,9 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MedicineDetailActivity.class);
 
-                intent.putExtra("brand_name",medicine.getBrand_name());
-                intent.putExtra("generic_name",medicine.getGeneric_name());
+                intent.putExtra("id", medicine.getId());
+                intent.putExtra("brand_name",medicine.getBrandName());
+                intent.putExtra("generic_name",medicine.getGenericName());
                 intent.putExtra("minStockLevel",medicine.getMinStockLevel());
                 intent.putExtra("mrp", medicine.getMrp());
                 intent.putExtra("expiry", medicine.getExpiry());
@@ -71,28 +72,28 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
                 intent.putExtra("category", medicine.getCategory());
                 intent.putExtra("batchNumber",medicine.getBatchNumber());
                 intent.putExtra("prescriptionRequired",medicine.isPrescriptionRequired());
-                intent.putExtra("stock_status",medicine.getStockStatus());
                 intent.putExtra("manufacturer",medicine.getManufacturer());
+                intent.putExtra("stock_status",medicine.getStockStatus());
 
                 v.getContext().startActivity(intent);
             }
         });
 
-        holder.brand_name.setText(medicine.getBrand_name());
-        holder.generic_name.setText(medicine.getGeneric_name());
-        holder.mrp.setText(String.valueOf("MRP: ₹" +medicine.getMrp()));
-        holder.expiry.setText(String.valueOf("Expiry: "+ medicine.getExpiry()));
-        holder.cost_price.setText(String.valueOf("Cost: ₹" +medicine.getCostPrice()));
+        holder.brand_name.setText(medicine.getBrandName());
+        holder.generic_name.setText(medicine.getGenericName());
+        holder.mrp.setText("MRP: ₹" + medicine.getMrp());
+        holder.cost_price.setText("Cost: ₹" + medicine.getCostPrice());
+        holder.expiry.setText("Expiry: " + medicine.getExpiry());
         holder.quantity.setText(String.valueOf(medicine.getQuantity()));
     }
 
     @Override
 //    return total item count
     public int getItemCount() {
-        return medicineList.size();
+        return medicineList != null ? medicineList.size() : 0;
     }
 
-    public void updateList(List<Medicine> newList) {
+    public void updateList(List<MedicineEntity> newList) {
         this.medicineList = newList;
         notifyDataSetChanged();
     }

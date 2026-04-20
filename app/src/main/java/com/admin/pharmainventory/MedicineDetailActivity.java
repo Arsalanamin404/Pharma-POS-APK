@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class MedicineDetailActivity extends AppCompatActivity {
 
-    TextView p_code, brand_name, generic_name, quantity;
+    TextView  brand_name, generic_name, quantity;
     TextView mrp, cost_price, expiry;
     TextView description, category, stockBadge, minStock;
     TextView manufacturer, batch_no, prescription;
@@ -31,8 +31,6 @@ public class MedicineDetailActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        p_code = findViewById(R.id.productCode);
         brand_name = findViewById(R.id.brand_name);
         generic_name = findViewById(R.id.generic_name);
         quantity = findViewById(R.id.quantity);
@@ -50,8 +48,6 @@ public class MedicineDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
-        p_code.setText(intent.getStringExtra("p_code"));
         brand_name.setText(intent.getStringExtra("brand_name"));
         generic_name.setText(intent.getStringExtra("generic_name"));
         expiry.setText(intent.getStringExtra("expiry"));

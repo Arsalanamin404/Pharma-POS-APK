@@ -124,4 +124,23 @@ public class MedicineEntity {
     public void setPrescriptionRequired(boolean prescriptionRequired) {
         this.prescriptionRequired = prescriptionRequired;
     }
+
+    public boolean isOutOfStock() {
+        return quantity == 0;
+    }
+
+    public double getProfit() {
+        return mrp - costPrice;
+    }
+
+    public double getProfitPercentage() {
+        if (costPrice == 0) return 0;
+        return ((mrp - costPrice) / costPrice) * 100;
+    }
+
+    public String getStockStatus() {
+        if (quantity == 0) return "OUT_OF_STOCK";
+        if (quantity <= minStockLevel) return "LOW_STOCK";
+        return "IN_STOCK";
+    }
 }

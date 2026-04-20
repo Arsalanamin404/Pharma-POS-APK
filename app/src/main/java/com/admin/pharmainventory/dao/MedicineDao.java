@@ -14,7 +14,7 @@ import java.util.List;
 public interface MedicineDao {
     // Insert one medicine
     @Insert
-    void insert(MedicineEntity medicine);
+    long insert(MedicineEntity medicine);
 
     // Get all medicines from Database
     @Query("SELECT * FROM medicines")

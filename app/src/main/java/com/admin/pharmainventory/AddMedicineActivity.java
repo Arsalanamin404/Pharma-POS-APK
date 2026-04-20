@@ -13,8 +13,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.admin.pharmainventory.database.DBHandler;
-import com.admin.pharmainventory.models.Medicine;
+import com.admin.pharmainventory.database.AppDatabase;
+import com.admin.pharmainventory.entities.MedicineEntity;
 import com.google.android.material.button.MaterialButton;
 
 
@@ -28,7 +28,8 @@ public class AddMedicineActivity extends AppCompatActivity {
     Button btnSave;
     MaterialButton btnUploadExcelFile;
 
-    DBHandler dbHandler;
+//    DBHandler dbHandler;
+    AppDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnUploadExcelFile = findViewById(R.id.btnUploadExcel);
 
-        dbHandler = new DBHandler(this);
+        database = AppDatabase.getInstance(this);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,26 +134,41 @@ public class AddMedicineActivity extends AppCompatActivity {
                     double costPrice = Double.parseDouble(cost);
                     double mrpPrice = Double.parseDouble(mrp);
 
+                    if (mrpPrice < costPrice) {
+                        et_mrp.setError("MRP cannot be less than Cost Price");
+                        et_mrp.requestFocus();
+                        return;
+                    }
+
+                    if (qty < 0) {
+                        et_quantity.setError("Quantity cannot be negative");
+                        return;
+                    }
+
+                    if (minStockLevel < 0) {
+                        et_min_stock.setError("Min stock cannot be negative");
+                        return;
+                    }
+
                     boolean cbIsReq = isPrescriptionRequired.isChecked();
 
-                    Medicine medicine = new Medicine(
-                            generic,
-                            brand,
-                            qty,
-                            minStockLevel,
-                            costPrice,
-                            mrpPrice,
-                            expiry,
-                            description,
-                            category,
-                            manufacturer,
-                            batch,
-                            cbIsReq
-                    );
+                    MedicineEntity medicine = new MedicineEntity();
+                    medicine.setGenericName(generic);
+                    medicine.setBrandName(brand);
+                    medicine.setQuantity(qty);
+                    medicine.setMinStockLevel(minStockLevel);
+                    medicine.setCostPrice(costPrice);
+                    medicine.setMrp(mrpPrice);
+                    medicine.setExpiry(expiry);
+                    medicine.setDescription(description);
+                    medicine.setCategory(category);
+                    medicine.setManufacturer(manufacturer);
+                    medicine.setBatchNumber(batch);
+                    medicine.setPrescriptionRequired(cbIsReq);
 
-                    boolean success = dbHandler.insertProduct(medicine);
+                    long id = database.medicineDao().insert(medicine);
 
-                    if (success) {
+                    if (id>0) {
                         Toast.makeText(getApplicationContext(), "Saved Successfully",Toast.LENGTH_LONG).show();
                         et_brand.setText("");
                         et_generic.setText("");

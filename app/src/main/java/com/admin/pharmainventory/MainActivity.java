@@ -11,10 +11,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.admin.pharmainventory.adapters.MedicineAdapter;
-import com.admin.pharmainventory.database.DBHandler;
-import com.admin.pharmainventory.models.Medicine;
+import com.admin.pharmainventory.database.AppDatabase;
+import com.admin.pharmainventory.entities.MedicineEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -24,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FloatingActionButton add_medicine_btn;
 
-    DBHandler dbHandler;
+//    DBHandler dbHandler;
+    AppDatabase database;
 
-    List<Medicine> medicineList;
+    List<MedicineEntity> medicineList;
     MedicineAdapter adapter;
 
     @Override
@@ -39,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        dbHandler = new DBHandler(this);
+
+//        dbHandler = new DBHandler(this);
+
+        database = AppDatabase.getInstance(this);
+
 
         // 1. Find Recycler View
         recyclerView = findViewById(R.id.recyclerView);
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //3. Create Data
-        medicineList = dbHandler.getAllProducts();
+        medicineList = database.medicineDao().getAllMedicines();
 
         //4. Create Adapter
         adapter = new MedicineAdapter(medicineList);
@@ -69,6 +75,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.updateList(dbHandler.getAllProducts());
+        adapter.updateList(database.medicineDao().getAllMedicines());
     }
 }
