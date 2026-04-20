@@ -16,7 +16,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.admin.pharmainventory.database.DBHandler;
 import com.admin.pharmainventory.models.Medicine;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 
 
 public class AddMedicineActivity extends AppCompatActivity {
