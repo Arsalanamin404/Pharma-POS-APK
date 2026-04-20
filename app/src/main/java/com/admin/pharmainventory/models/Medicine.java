@@ -1,8 +1,6 @@
 package com.admin.pharmainventory.models;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-
 /**
  * Represents a Medicine entity in the pharmacy inventory.
  * Contains details like identity, stock, pricing, expiry, and pharma-specific info.
@@ -10,7 +8,6 @@ import java.time.LocalDate;
 public class Medicine implements Serializable {
 
     // ===== Basic Info =====
-    private String p_code;
     private String generic_name;
     private String brand_name;
     private String category;
@@ -25,16 +22,17 @@ public class Medicine implements Serializable {
     private double mrp;
 
     // ===== Pharma Info =====
-    private LocalDate expiry;
+    private String expiry;
     private String batchNumber;
     private String manufacturer;
 
     private boolean prescriptionRequired;
 
+    public Medicine(){}
+
     /**
      * Constructs a Medicine object with complete details.
      *
-     * @param p_code               unique product code
      * @param genericName          the generic (salt) name of the medicine
      * @param brandName            the brand name of the medicine
      * @param quantity             available stock quantity
@@ -48,21 +46,20 @@ public class Medicine implements Serializable {
      * @param batchNumber          batch identifier
      * @param prescriptionRequired whether prescription is required
      */
-    public Medicine(String p_code,
+    public Medicine(
                     String genericName,
                     String brandName,
                     int quantity,
                     int minStockLevel,
                     double costPrice,
                     double mrp,
-                    LocalDate expiry,
+                    String expiry,
                     String description,
                     String category,
                     String manufacturer,
                     String batchNumber,
                     boolean prescriptionRequired) {
 
-        this.p_code = p_code;
         this.generic_name = genericName;
         this.brand_name = brandName;
         this.quantity = quantity;
@@ -77,14 +74,6 @@ public class Medicine implements Serializable {
         this.prescriptionRequired = prescriptionRequired;
     }
 
-
-    public String getP_code() {
-        return p_code;
-    }
-
-    public void setP_code(String p_code) {
-        this.p_code = p_code;
-    }
 
     public String getGeneric_name() {
         return generic_name;
@@ -150,11 +139,11 @@ public class Medicine implements Serializable {
         this.mrp = mrp;
     }
 
-    public LocalDate getExpiry() {
+    public String getExpiry() {
         return expiry;
     }
 
-    public void setExpiry(LocalDate expiry) {
+    public void setExpiry(String expiry) {
         this.expiry = expiry;
     }
 

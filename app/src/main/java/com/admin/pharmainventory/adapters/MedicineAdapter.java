@@ -59,12 +59,12 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MedicineDetailActivity.class);
-                intent.putExtra("p_code",medicine.getP_code());
+
                 intent.putExtra("brand_name",medicine.getBrand_name());
                 intent.putExtra("generic_name",medicine.getGeneric_name());
                 intent.putExtra("minStockLevel",medicine.getMinStockLevel());
                 intent.putExtra("mrp", medicine.getMrp());
-                intent.putExtra("expiry", medicine.getExpiry().toString());
+                intent.putExtra("expiry", medicine.getExpiry());
                 intent.putExtra("cost_price" ,medicine.getCostPrice());
                 intent.putExtra("quantity",medicine.getQuantity());
                 intent.putExtra("description",medicine.getDescription());
@@ -90,5 +90,10 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.ViewHo
 //    return total item count
     public int getItemCount() {
         return medicineList.size();
+    }
+
+    public void updateList(List<Medicine> newList) {
+        this.medicineList = newList;
+        notifyDataSetChanged();
     }
 }

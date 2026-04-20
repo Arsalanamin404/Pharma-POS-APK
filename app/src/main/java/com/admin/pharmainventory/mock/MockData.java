@@ -2,7 +2,6 @@ package com.admin.pharmainventory.mock;
 
 import com.admin.pharmainventory.models.Medicine;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +12,12 @@ public class MockData {
         List<Medicine> medicineList = new ArrayList<>();
 
         medicineList.add(new Medicine(
-                "P001",
                 "Paracetamol 650mg",
                 "Dolo 650",
                 35,
                 10,
                 22, 50,
-                LocalDate.of(2027, 12, 1),
+                "2027-12-01",
                 "Used to reduce fever and relieve mild to moderate pain such as headache, body ache, and cold.",
                 "Analgesic",
                 "Micro Labs",
@@ -27,13 +25,12 @@ public class MockData {
                 false));
 
         medicineList.add(new Medicine(
-                "P002",
                 "Amoxicillin + Clavulanate 625mg",
                 "Mox",
                 120,
                 15,
                 75, 120,
-                LocalDate.of(2026, 8, 1),
+                "2026-08-01",
                 "Broad-spectrum antibiotic used for respiratory, urinary, and skin infections.",
                 "Antibiotic",
                 "Ranbaxy",
@@ -41,13 +38,12 @@ public class MockData {
                 true));
 
         medicineList.add(new Medicine(
-                "P003",
                 "Azithromycin 500mg",
                 "Azee",
                 180,
                 20,
                 110, 180,
-                LocalDate.of(2026, 11, 1),
+                "2026-11-01",
                 "Used for bacterial infections including throat, respiratory, and ear infections.",
                 "Antibiotic",
                 "Cipla",
@@ -55,13 +51,12 @@ public class MockData {
                 true));
 
         medicineList.add(new Medicine(
-                "P004",
                 "Ibuprofen 400mg",
                 "Brufen",
                 90,
                 10,
                 55, 90,
-                LocalDate.of(2027, 5, 1),
+                "2027-05-01",
                 "NSAID used for pain relief, inflammation, and fever.",
                 "NSAID",
                 "Abbott",
@@ -69,13 +64,12 @@ public class MockData {
                 false));
 
         medicineList.add(new Medicine(
-                "P005",
                 "Metformin 500mg",
                 "Glycomet",
                 150,
                 20,
                 95, 150,
-                LocalDate.of(2028, 9, 1),
+                "2028-09-01",
                 "Controls blood sugar levels in type 2 diabetes.",
                 "Antidiabetic",
                 "USV",
@@ -83,13 +77,12 @@ public class MockData {
                 true));
 
         medicineList.add(new Medicine(
-                "P006",
                 "Atorvastatin 10mg",
                 "Atorlip",
                 220,
                 25,
                 140, 220,
-                LocalDate.of(2027, 3, 1),
+                "2027-03-01",
                 "Lowers cholesterol and reduces risk of heart disease.",
                 "Cardiac",
                 "Cipla",
@@ -97,13 +90,12 @@ public class MockData {
                 true));
 
         medicineList.add(new Medicine(
-                "P007",
                 "Pantoprazole 40mg",
                 "Pantocid",
                 130,
                 15,
                 80, 130,
-                LocalDate.of(2026, 7, 1),
+                "2026-07-01",
                 "Reduces stomach acid, used for acidity and GERD.",
                 "Gastro",
                 "Sun Pharma",
@@ -111,13 +103,12 @@ public class MockData {
                 false));
 
         medicineList.add(new Medicine(
-                "P008",
                 "Cetirizine 10mg",
                 "Okacet",
                 60,
                 10,
                 35, 60,
-                LocalDate.of(2027, 1, 1),
+                "2027-01-01",
                 "Relieves allergy symptoms like sneezing and itching.",
                 "Antihistamine",
                 "Cipla",
@@ -125,13 +116,12 @@ public class MockData {
                 false));
 
         medicineList.add(new Medicine(
-                "P009",
                 "Paracetamol 650mg",
                 "Calpol 650",
                 40,
                 10,
                 25, 45,
-                LocalDate.of(2026, 10, 1),
+                "2026-10-01",
                 "Common medicine for fever and pain relief.",
                 "Analgesic",
                 "GSK",
@@ -139,13 +129,12 @@ public class MockData {
                 false));
 
         medicineList.add(new Medicine(
-                "P010",
                 "Levocetirizine 5mg",
                 "Levocet",
                 75,
                 10,
                 45, 75,
-                LocalDate.of(2027, 6, 1),
+                "2027-06-01",
                 "Advanced antihistamine for allergies.",
                 "Antihistamine",
                 "Sun Pharma",
@@ -153,13 +142,12 @@ public class MockData {
                 false));
 
         medicineList.add(new Medicine(
-                "P011",
                 "Montelukast 10mg",
                 "Montek",
                 10,
                 20,
                 85, 140,
-                LocalDate.of(2027, 12, 1),
+                "2027-12-01",
                 "Used for asthma prevention and allergic rhinitis.",
                 "Respiratory",
                 "Sun Pharma",
