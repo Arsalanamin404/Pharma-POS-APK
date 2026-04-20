@@ -81,15 +81,28 @@ public class MedicineEntity {
         return costPrice;
     }
 
-    public void setCostPrice(double costPrice) {
-        this.costPrice = costPrice;
-    }
 
     public double getMrp() {
         return mrp;
     }
 
+    public void setCostPrice(double costPrice) {
+        if (costPrice < 0) {
+            throw new IllegalArgumentException("Cost price cannot be negative");
+        }
+        if (mrp != 0 && mrp < costPrice) {
+            throw new IllegalArgumentException("Cost price cannot exceed MRP");
+        }
+        this.costPrice = costPrice;
+    }
+
     public void setMrp(double mrp) {
+        if (mrp < 0) {
+            throw new IllegalArgumentException("MRP cannot be negative");
+        }
+        if (costPrice != 0 && mrp < costPrice) {
+            throw new IllegalArgumentException("MRP cannot be less than cost price");
+        }
         this.mrp = mrp;
     }
 

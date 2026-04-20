@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.admin.pharmainventory.database.AppDatabase;
-import com.admin.pharmainventory.entities.MedicineEntity;
 
 import java.util.Objects;
 
@@ -28,7 +26,7 @@ public class MedicineDetailActivity extends AppCompatActivity {
     TextView description, category, stockBadge, minStock;
     TextView manufacturer, batch_no, prescription;
 
-    Button btnDelete;
+    Button btnDelete, btnEdit;
 
     AppDatabase appDatabase;
 
@@ -57,6 +55,7 @@ public class MedicineDetailActivity extends AppCompatActivity {
         prescription = findViewById(R.id.prescription);
 
         btnDelete = findViewById(R.id.btnDelete);
+        btnEdit = findViewById(R.id.btnEdit);
 
         appDatabase = AppDatabase.getInstance(this);
 
@@ -118,5 +117,28 @@ public class MedicineDetailActivity extends AppCompatActivity {
                     .setNegativeButton("No", null)
                     .show();
         });
+
+        btnEdit.setOnClickListener(v -> {
+            Intent editIntent = new Intent(MedicineDetailActivity.this, AddMedicineActivity.class);
+
+            editIntent.putExtra("isEdit", true);
+            editIntent.putExtra("id", intent.getIntExtra("id", 0));
+
+            editIntent.putExtra("brand_name", intent.getStringExtra("brand_name"));
+            editIntent.putExtra("generic_name", intent.getStringExtra("generic_name"));
+            editIntent.putExtra("category", intent.getStringExtra("category"));
+            editIntent.putExtra("description", intent.getStringExtra("description"));
+            editIntent.putExtra("quantity", intent.getIntExtra("quantity", 0));
+            editIntent.putExtra("minStockLevel", intent.getIntExtra("minStockLevel", 0));
+            editIntent.putExtra("mrp", intent.getDoubleExtra("mrp", 0));
+            editIntent.putExtra("cost_price", intent.getDoubleExtra("cost_price", 0));
+            editIntent.putExtra("expiry", intent.getStringExtra("expiry"));
+            editIntent.putExtra("manufacturer", intent.getStringExtra("manufacturer"));
+            editIntent.putExtra("batchNumber", intent.getStringExtra("batchNumber"));
+            editIntent.putExtra("prescriptionRequired", intent.getBooleanExtra("prescriptionRequired", false));
+
+            startActivity(editIntent);
+        });
+
     }
 }

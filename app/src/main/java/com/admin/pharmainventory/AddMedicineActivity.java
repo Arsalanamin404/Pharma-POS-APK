@@ -1,7 +1,6 @@
 package com.admin.pharmainventory;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,10 +16,12 @@ import com.admin.pharmainventory.database.AppDatabase;
 import com.admin.pharmainventory.entities.MedicineEntity;
 import com.google.android.material.button.MaterialButton;
 
-
 public class AddMedicineActivity extends AppCompatActivity {
 
-    EditText  et_brand, et_generic, et_category, et_description;
+    boolean isEdit = false;
+    int medicineId = -1;
+
+    EditText et_brand, et_generic, et_category, et_description;
     EditText et_quantity, et_min_stock, et_manufacturer, et_batch;
     EditText et_expiry, et_cost, et_mrp;
     CheckBox isPrescriptionRequired;
@@ -28,7 +29,6 @@ public class AddMedicineActivity extends AppCompatActivity {
     Button btnSave;
     MaterialButton btnUploadExcelFile;
 
-//    DBHandler dbHandler;
     AppDatabase database;
 
     @Override
@@ -36,11 +36,13 @@ public class AddMedicineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_medicine);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         et_brand = findViewById(R.id.et_brand);
         et_generic = findViewById(R.id.et_generic);
@@ -60,138 +62,107 @@ public class AddMedicineActivity extends AppCompatActivity {
 
         database = AppDatabase.getInstance(this);
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String brand = et_brand.getText().toString().trim();
-                String generic = et_generic.getText().toString().trim();
-                String category = et_category.getText().toString().trim();
-                String description = et_description.getText().toString().trim();
-                String quantity = et_quantity.getText().toString().trim();
-                String minStock = et_min_stock.getText().toString().trim();
-                String manufacturer = et_manufacturer.getText().toString().trim();
-                String batch = et_batch.getText().toString().trim();
-                String expiry = et_expiry.getText().toString().trim();
-                String cost = et_cost.getText().toString().trim();
-                String mrp = et_mrp.getText().toString().trim();
+
+        isEdit = getIntent().getBooleanExtra("isEdit", false);
+        medicineId = getIntent().getIntExtra("id", -1);
 
 
-                if (brand.isEmpty()) {
-                    et_brand.setError("Brand name is required");
-                    et_brand.requestFocus();
+        if (isEdit) {
+            et_brand.setText(getIntent().getStringExtra("brand_name"));
+            et_generic.setText(getIntent().getStringExtra("generic_name"));
+            et_category.setText(getIntent().getStringExtra("category"));
+            et_description.setText(getIntent().getStringExtra("description"));
+            et_quantity.setText(String.valueOf(getIntent().getIntExtra("quantity", 0)));
+            et_min_stock.setText(String.valueOf(getIntent().getIntExtra("minStockLevel", 0)));
+            et_manufacturer.setText(getIntent().getStringExtra("manufacturer"));
+            et_batch.setText(getIntent().getStringExtra("batchNumber"));
+            et_expiry.setText(getIntent().getStringExtra("expiry"));
+            et_cost.setText(String.valueOf(getIntent().getDoubleExtra("cost_price", 0)));
+            et_mrp.setText(String.valueOf(getIntent().getDoubleExtra("mrp", 0)));
+            isPrescriptionRequired.setChecked(getIntent().getBooleanExtra("prescriptionRequired", false));
+
+            btnSave.setText("Update Medicine");
+        }
+
+
+        btnSave.setOnClickListener(v -> {
+
+            String brand = et_brand.getText().toString().trim();
+            String generic = et_generic.getText().toString().trim();
+            String category = et_category.getText().toString().trim();
+            String description = et_description.getText().toString().trim();
+            String quantity = et_quantity.getText().toString().trim();
+            String minStock = et_min_stock.getText().toString().trim();
+            String manufacturer = et_manufacturer.getText().toString().trim();
+            String batch = et_batch.getText().toString().trim();
+            String expiry = et_expiry.getText().toString().trim();
+            String cost = et_cost.getText().toString().trim();
+            String mrp = et_mrp.getText().toString().trim();
+
+
+            if (brand.isEmpty()) { et_brand.setError("Required"); return; }
+            if (generic.isEmpty()) { et_generic.setError("Required"); return; }
+            if (category.isEmpty()) { et_category.setError("Required"); return; }
+            if (quantity.isEmpty()) { et_quantity.setError("Required"); return; }
+            if (minStock.isEmpty()) { et_min_stock.setError("Required"); return; }
+            if (manufacturer.isEmpty()) { et_manufacturer.setError("Required"); return; }
+            if (batch.isEmpty()) { et_batch.setError("Required"); return; }
+            if (expiry.isEmpty()) { et_expiry.setError("Required"); return; }
+            if (cost.isEmpty()) { et_cost.setError("Required"); return; }
+            if (mrp.isEmpty()) { et_mrp.setError("Required"); return; }
+
+            try {
+                int qty = Integer.parseInt(quantity);
+                int minStockLevel = Integer.parseInt(minStock);
+                double costPrice = Double.parseDouble(cost);
+                double mrpPrice = Double.parseDouble(mrp);
+
+
+                if (qty < 0 || minStockLevel < 0) {
+                    Toast.makeText(this, "Invalid values", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (generic.isEmpty()) {
-                    et_generic.setError("Generic name is required");
-                    return;
+                MedicineEntity medicine = new MedicineEntity();
+
+                if (isEdit) {
+                    medicine.setId(medicineId);
                 }
 
-                if (category.isEmpty()) {
-                    et_category.setError("Drug category is required");
-                    return;
-                }
-
-                if (quantity.isEmpty()) {
-                    et_quantity.setError("Quantity is required");
-                    return;
-                }
-
-                if (minStock.isEmpty()) {
-                    et_min_stock.setError("Minimum stock level is required");
-                    return;
-                }
-
-                if (manufacturer.isEmpty()) {
-                    et_manufacturer.setError("Manufacturer name is required");
-                    return;
-                }
-
-                if (batch.isEmpty()) {
-                    et_batch.setError("Drug batch no. is required");
-                    return;
-                }
-
-                if (expiry.isEmpty()) {
-                    et_expiry.setError("Expiry date is required");
-                    return;
-                }
-
-                if (cost.isEmpty()) {
-                    et_cost.setError("Cost price is required");
-                    return;
-                }
-
-                if (mrp.isEmpty()) {
-                    et_mrp.setError("MRP is required");
-                    return;
-                }
+                medicine.setGenericName(generic);
+                medicine.setBrandName(brand);
+                medicine.setQuantity(qty);
+                medicine.setMinStockLevel(minStockLevel);
+                medicine.setCostPrice(costPrice);
+                medicine.setMrp(mrpPrice);
+                medicine.setExpiry(expiry);
+                medicine.setDescription(description);
+                medicine.setCategory(category);
+                medicine.setManufacturer(manufacturer);
+                medicine.setBatchNumber(batch);
+                medicine.setPrescriptionRequired(isPrescriptionRequired.isChecked());
 
 
-                try {
-                    int qty = Integer.parseInt(quantity);
-                    int minStockLevel = Integer.parseInt(minStock);
-                    double costPrice = Double.parseDouble(cost);
-                    double mrpPrice = Double.parseDouble(mrp);
-
-                    if (mrpPrice < costPrice) {
-                        et_mrp.setError("MRP cannot be less than Cost Price");
-                        et_mrp.requestFocus();
-                        return;
-                    }
-
-                    if (qty < 0) {
-                        et_quantity.setError("Quantity cannot be negative");
-                        return;
-                    }
-
-                    if (minStockLevel < 0) {
-                        et_min_stock.setError("Min stock cannot be negative");
-                        return;
-                    }
-
-                    boolean cbIsReq = isPrescriptionRequired.isChecked();
-
-                    MedicineEntity medicine = new MedicineEntity();
-                    medicine.setGenericName(generic);
-                    medicine.setBrandName(brand);
-                    medicine.setQuantity(qty);
-                    medicine.setMinStockLevel(minStockLevel);
-                    medicine.setCostPrice(costPrice);
-                    medicine.setMrp(mrpPrice);
-                    medicine.setExpiry(expiry);
-                    medicine.setDescription(description);
-                    medicine.setCategory(category);
-                    medicine.setManufacturer(manufacturer);
-                    medicine.setBatchNumber(batch);
-                    medicine.setPrescriptionRequired(cbIsReq);
-
+                if (isEdit) {
+                    database.medicineDao().update(medicine);
+                    Toast.makeText(this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                } else {
                     long id = database.medicineDao().insert(medicine);
-
-                    if (id>0) {
-                        Toast.makeText(getApplicationContext(), "Saved Successfully",Toast.LENGTH_LONG).show();
-                        et_brand.setText("");
-                        et_generic.setText("");
-                        et_category.setText("");
-                        et_description.setText("");
-                        et_quantity.setText("");
-                        et_min_stock.setText("");
-                        et_manufacturer.setText("");
-                        et_batch.setText("");
-                        et_expiry.setText("");
-                        et_cost.setText("");
-                        et_mrp.setText("");
-                        isPrescriptionRequired.setChecked(false);
-
-                        setResult(RESULT_OK);
-                        finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Insert Failed (Check duplicate or constraints)",Toast.LENGTH_LONG).show();
+                    if (id <= 0) {
+                        Toast.makeText(this, "Insert Failed", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-
-                } catch (NumberFormatException e) {
-                    Toast.makeText(getApplicationContext(), "Invalid numeric values",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Saved Successfully", Toast.LENGTH_SHORT).show();
                 }
+
+                setResult(RESULT_OK);
+                finish();
+
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Invalid numeric values", Toast.LENGTH_SHORT).show();
+            }
+            catch (IllegalArgumentException e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
