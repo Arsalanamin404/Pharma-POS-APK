@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -153,7 +154,7 @@ public class AddMedicineActivity extends AppCompatActivity {
                     boolean success = dbHandler.insertProduct(medicine);
 
                     if (success) {
-                        Snackbar.make(findViewById(R.id.main), "Saved Successfully",Snackbar.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Saved Successfully",Toast.LENGTH_LONG).show();
                         et_brand.setText("");
                         et_generic.setText("");
                         et_category.setText("");
@@ -170,11 +171,11 @@ public class AddMedicineActivity extends AppCompatActivity {
                         setResult(RESULT_OK);
                         finish();
                     } else {
-                        Snackbar.make(findViewById(R.id.main), "Insert Failed (Check duplicate or constraints)",Snackbar.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Insert Failed (Check duplicate or constraints)",Toast.LENGTH_LONG).show();
                     }
 
                 } catch (NumberFormatException e) {
-                    Snackbar.make(findViewById(R.id.main), "Invalid numeric values",Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Invalid numeric values",Toast.LENGTH_LONG).show();
                 }
             }
         });
