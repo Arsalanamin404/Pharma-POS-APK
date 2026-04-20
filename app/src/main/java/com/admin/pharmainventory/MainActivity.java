@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import com.admin.pharmainventory.adapters.MedicineAdapter;
 import com.admin.pharmainventory.database.AppDatabase;
@@ -41,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-//        dbHandler = new DBHandler(this);
 
         database = AppDatabase.getInstance(this);
 

@@ -1,9 +1,13 @@
 package com.admin.pharmainventory;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,15 +15,22 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.admin.pharmainventory.database.AppDatabase;
+import com.admin.pharmainventory.entities.MedicineEntity;
+
 import java.util.Objects;
 
 
 public class MedicineDetailActivity extends AppCompatActivity {
 
-    TextView  brand_name, generic_name, quantity;
+    TextView brand_name, generic_name, quantity;
     TextView mrp, cost_price, expiry;
     TextView description, category, stockBadge, minStock;
     TextView manufacturer, batch_no, prescription;
+
+    Button btnDelete;
+
+    AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +55,10 @@ public class MedicineDetailActivity extends AppCompatActivity {
         manufacturer = findViewById(R.id.manufacturer);
         batch_no = findViewById(R.id.batch_no);
         prescription = findViewById(R.id.prescription);
+
+        btnDelete = findViewById(R.id.btnDelete);
+
+        appDatabase = AppDatabase.getInstance(this);
 
 
         Intent intent = getIntent();
@@ -83,6 +98,25 @@ public class MedicineDetailActivity extends AppCompatActivity {
             stockBadge.setTextColor(Color.WHITE);
         }
 
+        btnDelete.setOnClickListener(v -> {
+            int id = intent.getIntExtra("id", 0);
 
+            new AlertDialog.Builder(MedicineDetailActivity.this)
+                    .setTitle("Delete Medicine")
+                    .setMessage("Are you sure you want to delete this medicine?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+
+                        appDatabase.medicineDao().deleteById(id);
+
+                        Toast.makeText(MedicineDetailActivity.this,
+                                "Medicine deleted successfully",
+                                Toast.LENGTH_SHORT).show();
+
+                        setResult(RESULT_OK);
+                        finish();
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        });
     }
 }
